@@ -1,0 +1,16 @@
+version: '3'
+services:
+  api-test:
+    container_name: api-test
+    build:
+      dockerfile: Dockerfile
+      context: ./testing
+    command:
+      bash -c "npm run test; npm run test-failure"
+    networks:
+      - mongo-network
+    environment:
+      - API_URL=http://proxy:80
+      - MONGO_URL=mongodb://mongo:27017/bobwilmes
+    ports:
+      - '27017:27017'
